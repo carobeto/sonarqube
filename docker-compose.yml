@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  sonarqube:
+    image: sonarqube:7.7-community
+    container_name: sonarqube
+    network_mode: bridge
+    ports:
+      - '9009:9000'
+    tty: true
+    environment:
+      - sonar.jdbc.url=jdbc:mysql://nome-dns-servidor-database:3306/sonar?useUnicode=true&characterEncoding=utf8
+      - sonar.jdbc.username=sonar
+      - sonar.jdbc.password=senha-usuario-sonar
+      - VIRTUAL_HOST=sonar.seu-dominio.com.br
+      - LETSENCRYPT_HOST=sonar.seu-dominio.com.br
+      - LETSENCRYPT_EMAIL=seu-email@seu-dominio.com.br
+    restart: always
+    volumes:
+      - /opt/seu-diretorio/volumes/sonarqube/conf:/opt/sonarqube/conf
+      - /opt/seu-diretorio/volumes/sonarqube/data:/opt/sonarqube/data
+      - /opt/seu-diretorio/volumes/sonarqube/extensions:/opt/sonarqube/extensions
+      - /opt/seu-diretorio/volumes/sonarqube/bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+      - /opt/seu-diretorio/volumes/sonarqube/temp:/opt/sonarqube/temp
